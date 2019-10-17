@@ -630,6 +630,7 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
 	local dashboardColor = GetVehicleDashboardColour(vehicle);
 	local interiorColor = GetVehicleInteriorColour(vehicle);
+	local modTyres = GetVehicleModVariation(vehicle, 23);
 	local extras = {}
 
 	for id=0, 12 do
@@ -697,6 +698,7 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 		modXenon          = IsToggleModOn(vehicle, 22),
 
 		modFrontWheels    = GetVehicleMod(vehicle, 23),
+		modTyres          = modTyres,
 		modBackWheels     = GetVehicleMod(vehicle, 24),
 
 		modPlateHolder    = GetVehicleMod(vehicle, 25),
@@ -818,71 +820,71 @@ ESX.Game.SetVehicleProperties = function(vehicle, props)
 	end
 
 	if props.modSpoilers ~= nil then
-		SetVehicleMod(vehicle, 0, props.modSpoilers, false)
+		SetVehicleMod(vehicle, 0, props.modSpoilers, props.modTyres)
 	end
 
 	if props.modFrontBumper ~= nil then
-		SetVehicleMod(vehicle, 1, props.modFrontBumper, false)
+		SetVehicleMod(vehicle, 1, props.modFrontBumper, props.modTyres)
 	end
 
 	if props.modRearBumper ~= nil then
-		SetVehicleMod(vehicle, 2, props.modRearBumper, false)
+		SetVehicleMod(vehicle, 2, props.modRearBumper, props.modTyres)
 	end
 
 	if props.modSideSkirt ~= nil then
-		SetVehicleMod(vehicle, 3, props.modSideSkirt, false)
+		SetVehicleMod(vehicle, 3, props.modSideSkirt, props.modTyres)
 	end
 
 	if props.modExhaust ~= nil then
-		SetVehicleMod(vehicle, 4, props.modExhaust, false)
+		SetVehicleMod(vehicle, 4, props.modExhaust, props.modTyres)
 	end
 
 	if props.modFrame ~= nil then
-		SetVehicleMod(vehicle, 5, props.modFrame, false)
+		SetVehicleMod(vehicle, 5, props.modFrame, props.modTyres)
 	end
 
 	if props.modGrille ~= nil then
-		SetVehicleMod(vehicle, 6, props.modGrille, false)
+		SetVehicleMod(vehicle, 6, props.modGrille, props.modTyres)
 	end
 
 	if props.modHood ~= nil then
-		SetVehicleMod(vehicle, 7, props.modHood, false)
+		SetVehicleMod(vehicle, 7, props.modHood, props.modTyres)
 	end
 
 	if props.modFender ~= nil then
-		SetVehicleMod(vehicle, 8, props.modFender, false)
+		SetVehicleMod(vehicle, 8, props.modFender, props.modTyres)
 	end
 
 	if props.modRightFender ~= nil then
-		SetVehicleMod(vehicle, 9, props.modRightFender, false)
+		SetVehicleMod(vehicle, 9, props.modRightFender, props.modTyres)
 	end
 
 	if props.modRoof ~= nil then
-		SetVehicleMod(vehicle, 10, props.modRoof, false)
+		SetVehicleMod(vehicle, 10, props.modRoof, props.modTyres)
 	end
 
 	if props.modEngine ~= nil then
-		SetVehicleMod(vehicle, 11, props.modEngine, false)
+		SetVehicleMod(vehicle, 11, props.modEngine, props.modTyres)
 	end
 
 	if props.modBrakes ~= nil then
-		SetVehicleMod(vehicle, 12, props.modBrakes, false)
+		SetVehicleMod(vehicle, 12, props.modBrakes, props.modTyres)
 	end
 
 	if props.modTransmission ~= nil then
-		SetVehicleMod(vehicle, 13, props.modTransmission, false)
+		SetVehicleMod(vehicle, 13, props.modTransmission, props.modTyres)
 	end
 
 	if props.modHorns ~= nil then
-		SetVehicleMod(vehicle, 14, props.modHorns, false)
+		SetVehicleMod(vehicle, 14, props.modHorns, props.modTyres)
 	end
 
 	if props.modSuspension ~= nil then
-		SetVehicleMod(vehicle, 15, props.modSuspension, false)
+		SetVehicleMod(vehicle, 15, props.modSuspension, props.modTyres)
 	end
 
 	if props.modArmor ~= nil then
-		SetVehicleMod(vehicle, 16, props.modArmor, false)
+		SetVehicleMod(vehicle, 16, props.modArmor, props.modTyres)
 	end
 
 	if props.modTurbo ~= nil then
@@ -894,103 +896,112 @@ ESX.Game.SetVehicleProperties = function(vehicle, props)
 	end
 
 	if props.modFrontWheels ~= nil then
-		SetVehicleMod(vehicle, 23, props.modFrontWheels, false)
+		local currentTyres = GetVehicleModVariation(vehicle, 23)
+		SetVehicleMod(vehicle, 23, props.modFrontWheels, currentTyres)
+	end
+
+	if props.modTyres ~= nil then
+		local currentWheelsF = GetVehicleMod(vehicle, 23)
+		local currentWheelsR = GetVehicleMod(vehicle, 24)
+		SetVehicleMod(vehicle, 23, currentWheelsF, props.modTyres)
+		SetVehicleMod(vehicle, 24, currentWheelsR, props.modTyres)
 	end
 
 	if props.modBackWheels ~= nil then
-		SetVehicleMod(vehicle, 24, props.modBackWheels, false)
+		local currentTyresRear = GetVehicleModVariation(vehicle, 23)
+		SetVehicleMod(vehicle, 24, props.modBackWheels, currentTyresRear)
 	end
 
 	if props.modPlateHolder ~= nil then
-		SetVehicleMod(vehicle, 25, props.modPlateHolder, false)
+		SetVehicleMod(vehicle, 25, props.modPlateHolder, props.modTyres)
 	end
 
 	if props.modVanityPlate ~= nil then
-		SetVehicleMod(vehicle, 26, props.modVanityPlate, false)
+		SetVehicleMod(vehicle, 26, props.modVanityPlate, props.modTyres)
 	end
 
 	if props.modTrimA ~= nil then
-		SetVehicleMod(vehicle, 27, props.modTrimA, false)
+		SetVehicleMod(vehicle, 27, props.modTrimA, props.modTyres)
 	end
 
 	if props.modOrnaments ~= nil then
-		SetVehicleMod(vehicle, 28, props.modOrnaments, false)
+		SetVehicleMod(vehicle, 28, props.modOrnaments, props.modTyres)
 	end
 
 	if props.modDashboard ~= nil then
-		SetVehicleMod(vehicle, 29, props.modDashboard, false)
+		SetVehicleMod(vehicle, 29, props.modDashboard, props.modTyres)
 	end
 
 	if props.modDial ~= nil then
-		SetVehicleMod(vehicle, 30, props.modDial, false)
+		SetVehicleMod(vehicle, 30, props.modDial, props.modTyres)
 	end
 
 	if props.modDoorSpeaker ~= nil then
-		SetVehicleMod(vehicle, 31, props.modDoorSpeaker, false)
+		SetVehicleMod(vehicle, 31, props.modDoorSpeaker, props.modTyres)
 	end
 
 	if props.modSeats ~= nil then
-		SetVehicleMod(vehicle, 32, props.modSeats, false)
+		SetVehicleMod(vehicle, 32, props.modSeats, props.modTyres)
 	end
 
 	if props.modSteeringWheel ~= nil then
-		SetVehicleMod(vehicle, 33, props.modSteeringWheel, false)
+		SetVehicleMod(vehicle, 33, props.modSteeringWheel, props.modTyres)
 	end
 
 	if props.modShifterLeavers ~= nil then
-		SetVehicleMod(vehicle, 34, props.modShifterLeavers, false)
+		SetVehicleMod(vehicle, 34, props.modShifterLeavers, props.modTyres)
 	end
 
 	if props.modAPlate ~= nil then
-		SetVehicleMod(vehicle, 35, props.modAPlate, false)
+		SetVehicleMod(vehicle, 35, props.modAPlate, props.modTyres)
 	end
 
 	if props.modSpeakers ~= nil then
-		SetVehicleMod(vehicle, 36, props.modSpeakers, false)
+		SetVehicleMod(vehicle, 36, props.modSpeakers, props.modTyres)
 	end
 
 	if props.modTrunk ~= nil then
-		SetVehicleMod(vehicle, 37, props.modTrunk, false)
+		SetVehicleMod(vehicle, 37, props.modTrunk, props.modTyres)
 	end
 
 	if props.modHydrolic ~= nil then
-		SetVehicleMod(vehicle, 38, props.modHydrolic, false)
+		SetVehicleMod(vehicle, 38, props.modHydrolic, props.modTyres)
 	end
 
 	if props.modEngineBlock ~= nil then
-		SetVehicleMod(vehicle, 39, props.modEngineBlock, false)
+		SetVehicleMod(vehicle, 39, props.modEngineBlock, props.modTyres)
 	end
 
 	if props.modAirFilter ~= nil then
-		SetVehicleMod(vehicle, 40, props.modAirFilter, false)
+		SetVehicleMod(vehicle, 40, props.modAirFilter, props.modTyres)
 	end
 
 	if props.modStruts ~= nil then
-		SetVehicleMod(vehicle, 41, props.modStruts, false)
+		SetVehicleMod(vehicle, 41, props.modStruts, props.modTyres)
 	end
 
 	if props.modArchCover ~= nil then
-		SetVehicleMod(vehicle, 42, props.modArchCover, false)
+		SetVehicleMod(vehicle, 42, props.modArchCover, props.modTyres)
 	end
 
 	if props.modAerials ~= nil then
-		SetVehicleMod(vehicle, 43, props.modAerials, false)
+		SetVehicleMod(vehicle, 43, props.modAerials, props.modTyres)
 	end
 
 	if props.modTrimB ~= nil then
-		SetVehicleMod(vehicle, 44, props.modTrimB, false)
+		SetVehicleMod(vehicle, 44, props.modTrimB, props.modTyres)
 	end
 
 	if props.modTank ~= nil then
-		SetVehicleMod(vehicle, 45, props.modTank, false)
+		SetVehicleMod(vehicle, 45, props.modTank, props.modTyres)
 	end
 
 	if props.modWindows ~= nil then
-		SetVehicleMod(vehicle, 46, props.modWindows, false)
+		SetVehicleMod(vehicle, 46, props.modWindows, props.modTyres)
 	end
 
 	if props.modLivery ~= nil then
-		SetVehicleMod(vehicle, 48, props.modLivery, false)
+		SetVehicleMod(vehicle, 48, props.modLivery, props.modTyres)
 		SetVehicleLivery(vehicle, props.modLivery)
 	end
 end
